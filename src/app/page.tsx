@@ -1,4 +1,7 @@
 import Link from "next/link";
+import path from "path";
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 
 export default function Home() {
   return (

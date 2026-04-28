@@ -1,5 +1,7 @@
 import Link from "next/link";
+import path from "path";
 
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 const OT_BOOKS = [
   { slug: "genesis", name: "Genesis", chapters: 50 },
   { slug: "exodus", name: "Exodus", chapters: 40 },

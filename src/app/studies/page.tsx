@@ -1,3 +1,6 @@
+import path from "path";
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 export default function Studies() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-14">

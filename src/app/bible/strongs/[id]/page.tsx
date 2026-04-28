@@ -1,7 +1,9 @@
 import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import path from "path";
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 
 type Occurrence = {
   testament?: "ot" | "nt";
@@ -27,7 +29,7 @@ type LexiconEntry = {
 };
 
 function readJson<T>(parts: string[], fallback: T): T {
-  const filePath = path.join(process.cwd(), ...parts);
+  const filePath = path.join(DATA_DIR, ...parts);
 
   if (!fs.existsSync(filePath)) return fallback;
 
@@ -49,7 +51,6 @@ export default async function StrongsPage({
 
   const index = readJson<Record<string, Occurrence[]>>(
     [
-      "data",
       "indexes",
       isHebrew ? "strongs_ot_index.json" : "strongs_nt_index.json",
     ],
@@ -58,7 +59,6 @@ export default async function StrongsPage({
 
   const lexicon = readJson<Record<string, LexiconEntry>>(
     [
-      "data",
       "lexicon",
       isHebrew ? "hebrew_strongs.json" : "greek_strongs.json",
     ],

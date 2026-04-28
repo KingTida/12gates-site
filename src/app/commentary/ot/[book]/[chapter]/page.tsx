@@ -3,6 +3,9 @@ import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
+
 type CommentaryBlock =
   | {
       type: "paragraph";
@@ -31,8 +34,7 @@ type CommentaryData = {
 
 function getCommentary(book: string, chapter: string): CommentaryData | null {
   const filePath = path.join(
-    process.cwd(),
-    "data",
+    DATA_DIR,
     "commentary",
     "ot",
     book,

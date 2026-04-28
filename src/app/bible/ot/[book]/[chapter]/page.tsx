@@ -1,8 +1,10 @@
 import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import VerseWordStudy from "@/components/VerseWordStudy";
+import path from "path";
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 
 type Word = {
   word_index?: number;
@@ -93,8 +95,7 @@ function getBook(slug: string) {
 
 function getChapterData(book: string, chapter: string): ChapterData | null {
   const filePath = path.join(
-    process.cwd(),
-    "data",
+    DATA_DIR,
     "bible",
     "ot",
     book,
@@ -106,12 +107,7 @@ function getChapterData(book: string, chapter: string): ChapterData | null {
 }
 
 function getLexicon(): Record<string, LexiconEntry> {
-  const filePath = path.join(
-    process.cwd(),
-    "data",
-    "lexicon",
-    "hebrew_strongs.json"
-  );
+  const filePath = path.join(DATA_DIR, "lexicon", "hebrew_strongs.json");
 
   if (!fs.existsSync(filePath)) return {};
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -119,8 +115,7 @@ function getLexicon(): Record<string, LexiconEntry> {
 
 function commentaryExists(book: string, chapter: string) {
   const filePath = path.join(
-    process.cwd(),
-    "data",
+    DATA_DIR,
     "commentary",
     "ot",
     book,

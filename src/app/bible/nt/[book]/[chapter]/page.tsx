@@ -1,8 +1,10 @@
 import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import VerseWordStudy from "@/components/VerseWordStudy";
+import path from "path";
+
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 
 type Word = {
   word_index?: number;
@@ -81,8 +83,7 @@ function getBook(slug: string) {
 
 function getChapterData(book: string, chapter: string): ChapterData | null {
   const filePath = path.join(
-    process.cwd(),
-    "data",
+    DATA_DIR,
     "bible",
     "nt",
     book,
@@ -94,12 +95,7 @@ function getChapterData(book: string, chapter: string): ChapterData | null {
 }
 
 function getLexicon(): Record<string, LexiconEntry> {
-  const filePath = path.join(
-    process.cwd(),
-    "data",
-    "lexicon",
-    "greek_strongs.json"
-  );
+  const filePath = path.join(DATA_DIR, "lexicon", "greek_strongs.json");
 
   if (!fs.existsSync(filePath)) return {};
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -107,8 +103,7 @@ function getLexicon(): Record<string, LexiconEntry> {
 
 function commentaryExists(book: string, chapter: string) {
   const filePath = path.join(
-    process.cwd(),
-    "data",
+    DATA_DIR,
     "commentary",
     "nt",
     book,
@@ -170,7 +165,7 @@ export default async function NTChapterPage({
             href={`/commentary/nt/${resolvedParams.book}/${resolvedParams.chapter}`}
             className="inline-block rounded-lg border-2 border-white px-5 py-3 font-bold transition hover:bg-white hover:text-black"
           >
-            Read Commentary →
+            Read Chapter Commentary →
           </Link>
         </div>
       )}
