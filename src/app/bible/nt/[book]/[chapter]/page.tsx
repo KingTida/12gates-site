@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import VerseWordStudy from "@/components/VerseWordStudy";
 import path from "path";
-export const dynamicParams = true;
+
 const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data");
 
 type Word = {
@@ -62,20 +62,20 @@ const NT_BOOKS = [
   { slug: "revelation", name: "Revelation", chapters: 22 },
 ];
 
-// export async function generateStaticParams() {
-//   const params: { book: string; chapter: string }[] = [];
+export async function generateStaticParams() {
+  const params: { book: string; chapter: string }[] = [];
 
-//   for (const book of NT_BOOKS) {
-//     for (let i = 1; i <= book.chapters; i++) {
-//       params.push({
-//         book: book.slug,
-//         chapter: String(i),
-//       });
-//     }
-//   }
+  for (const book of NT_BOOKS) {
+    for (let i = 1; i <= book.chapters; i++) {
+      params.push({
+        book: book.slug,
+        chapter: String(i),
+      });
+    }
+  }
 
-//   return params;
-// }
+  return params;
+}
 
 function getBook(slug: string) {
   return NT_BOOKS.find((b) => b.slug === slug);
